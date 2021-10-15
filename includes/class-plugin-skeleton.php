@@ -6,7 +6,7 @@
  * @author    S Cayton
  */
 
-namespace ScottyC\PluginSkeleton;
+namespace SCayton\PluginSkeleton;
 
 /**
  * Basic Class using singleton instantiation

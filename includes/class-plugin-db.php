@@ -6,7 +6,7 @@
  * @author  S Cayton
  */
 
-namespace ScottyC\PluginSkeleton;
+namespace SCayton\PluginSkeleton;
 
 /**
  * Search Log Database config, activation, and uninstall.
