@@ -47,4 +47,16 @@ class Plugin_Skeleton {
 	public function skeleton_hook() {
 		echo 'Hello from the skeleton';
 	}
+
+	/**
+	 * Log a string and data to the console.
+	 *
+	 * Useful for debugging / dev.
+	 *
+	 * @param string $string String to prefix data with.
+	 * @param any    $data Data to log, will be in stringified JSON format.
+	 */
+	public function log( $string, $data ) {
+		echo '<script>console.log( ' . esc_attr( $string ) . " + ' : ' + JSON.stringify( " . wp_json_encode( $data ) . ' ) );</script>';
+	}
 }
