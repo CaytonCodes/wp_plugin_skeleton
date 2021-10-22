@@ -57,7 +57,8 @@ function plugskel_v1_init() {
 	$plugskel_db   = Plugin_DB::get_instance();
 }
 
-register_activation_hook( __FILE__, array( 'SCayton\\PluginSkeleton\\Plugin_DB', 'table_check' ) );
-register_uninstall_hook( __FILE__, array( 'SCayton\\PluginSkeleton\\Plugin_DB', 'clean_up' ) );
+register_activation_hook( __FILE__, array( 'SCayton\\PluginSkeleton\\Plugin_Config', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'SCayton\\PluginSkeleton\\Plugin_Config', 'deactivate' ) );
+register_uninstall_hook( __FILE__, array( 'SCayton\\PluginSkeleton\\Plugin_Config', 'uninstall' ) );
 
 add_action( 'init', 'SCayton\\PluginSkeleton\\plugskel_v1_init' );

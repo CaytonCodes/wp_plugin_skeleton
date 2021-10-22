@@ -9,7 +9,7 @@
 namespace SCayton\PluginSkeleton;
 
 /**
- * Search Log Database config, activation, and uninstall.
+ * Plugin Database config, activation, and uninstall.
  *
  *  A class of methods that handle plugin setup, break-down, and database constants.
  */
