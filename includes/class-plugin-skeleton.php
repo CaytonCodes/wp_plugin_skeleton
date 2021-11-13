@@ -39,6 +39,26 @@ class Plugin_Skeleton {
 	 */
 	private function do_hooks() {
 		add_action( 'wp', array( $this, 'skeleton_hook' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+	}
+
+	/**
+	 * Enqueue scripts.
+	 */
+	public function enqueue_scripts() {
+		// array of variables to send as arguments.
+		$args = array(
+			'key' => 'value',
+		);
+
+		// enqueue script.
+		wp_enqueue_script( 'plugin-skeleton', plugins_url( '../assets/js/plugin-skeleton.js', __FILE__ ), null, '1.0.0', true );
+		// send variables to script.
+		wp_localize_script(
+			'plugin-skeleton',
+			'args',
+			$args
+		);
 	}
 
 	/**
@@ -56,7 +76,7 @@ class Plugin_Skeleton {
 	 * @param string $string String to prefix data with.
 	 * @param any    $data Data to log, will be in stringified JSON format.
 	 */
-	public function log( $string, $data ) {
-		echo '<script>console.log( ' . esc_attr( $string ) . " + ' : ' + JSON.stringify( " . wp_json_encode( $data ) . ' ) );</script>';
+	public static function log( $string, $data ) {
+		echo "<script>console.log( '" . esc_attr( $string ) . "' + ' : ' + JSON.stringify( " . wp_json_encode( $data ) . ' ) );</script>';
 	}
 }

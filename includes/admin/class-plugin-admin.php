@@ -11,6 +11,7 @@
 namespace SCayton\PluginSkeleton\Admin;
 
 use SCayton\PluginSkeleton\Plugin_Config;
+use SCayton\PluginSkeleton\Plugin_Skeleton;
 
 /**
  * The admin-specific functionality of the plugin.
@@ -21,11 +22,11 @@ use SCayton\PluginSkeleton\Plugin_Config;
  */
 class Plugin_Admin {
 	/**
-	 * Settings options
+	 * Settings object
 	 *
 	 * @var object
 	 */
-	private $options;
+	private $settings;
 
 	/**
 	 * Plain English title of the plugin.
@@ -68,8 +69,10 @@ class Plugin_Admin {
 	 */
 	private function __construct() {
 		// Do any initial setup.
-		$this->title = Plugin_Config::get_constant( 'PLUGIN_TITLE' );
-		$this->name  = Plugin_Config::get_constant( 'PLUGIN_NAME' );
+		$this->title    = Plugin_Config::get_constant( 'PLUGIN_TITLE' );
+		$this->name     = Plugin_Config::get_constant( 'PLUGIN_NAME' );
+		$this->settings = Plugin_Settings::get_instance();
+
 	}
 
 	/**
@@ -78,6 +81,7 @@ class Plugin_Admin {
 	private function do_hooks() {
 		add_action( 'admin_menu', array( $this, 'add_plugin_admin_menus' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_scripts' ) );
+		add_action( 'admin_init', array( $this, 'admin_page_init' ) );
 	}
 
 	/**
@@ -86,8 +90,8 @@ class Plugin_Admin {
 	 * @return void
 	 */
 	public function register_admin_scripts() {
-		wp_register_script( $this->snake_to_dash( $this->plugin_name ) . '-admin-script', plugins_url( '/js/admin.js', __FILE__ ), array( 'jquery' ), '0.0.1', true );
-		wp_register_style( $this->snake_to_dash( $this->plugin_name ) . '-admin-style', plugins_url( '/js/admin.css', __FILE__ ), '0.0.1', true );
+		wp_register_script( $this->settings::snake_to_dash( $this->name ) . '-admin-script', plugins_url( '../../assets/js/admin.js', __FILE__ ), array( 'jquery' ), '0.0.1', true );
+		wp_register_style( $this->settings::snake_to_dash( $this->name ) . '-admin-style', plugins_url( '../../assets/css/admin.css', __FILE__ ), '0.0.1', true );
 	}
 
 	/**
@@ -108,33 +112,44 @@ class Plugin_Admin {
 	}
 
 	/**
-	 * Convert snake case to dash case.
-	 *
-	 * @param string $str initial string.
-	 * @return string $str converted string.
-	 */
-	public function snake_to_dash( $str ) {
-		$str = str_replace( '_', '-', $str );
-
-		return $str;
-	}
-
-	/**
 	 * Displays the admin page.
 	 *
 	 * @return void
 	 */
 	public function display_admin_page() {
-		$name = $this->name;
+		$name  = $this->name;
+		$title = $this->title;
+		$slug = $this->settings->snake_to_dash( $name );
 
-		wp_enqueue_script( $this->snake_to_dash( $this->plugin_name ) . '-admin-script' );
-		wp_enqueue_style( $this->snake_to_dash( $this->plugin_name ) . '-admin-style' );
+		wp_enqueue_script( $this->settings::snake_to_dash( $name ) . '-admin-script' );
+		wp_enqueue_style( $this->settings::snake_to_dash( $name ) . '-admin-style' );
 
-		$content = "
-			<div class='$name container' id='$name'>
-				<H1>$name Plugin Settings</H1>
-			</div>";
+		ob_start();
+		?>
+			<div class='$name .  container' id='$name'>
+				<H1>$title Plugin Settings</H1>
+				<div class='settings-section'>
+					<h2>General Settings</h2>
+					<form method='post' action='options.php'>
+						<table class='form-table'>
+							<?php
+							settings_fields( $name );
+							do_settings_sections( $slug );
+							submit_button( 'Save Settings' );
+							?>
+						</table>
+					</form>
+				</div>
+			</div>
+			<?php
+			echo ob_get_clean();
+	}
 
-		echo $content;
+	/**
+	 * Initialize page  and plugin settings.
+	 */
+	public function admin_page_init() {
+		$this->settings->build_settings();
+		$this->settings->register_settings();
 	}
 }

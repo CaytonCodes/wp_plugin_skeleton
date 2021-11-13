@@ -53,8 +53,9 @@ spl_autoload_register(
  * @since 0.0.1
  */
 function plugskel_v1_init() {
-	$plugskel_inst = Plugin_Skeleton::get_instance();
-	$plugskel_db   = Plugin_DB::get_instance();
+	$plugskel_inst  = Plugin_Skeleton::get_instance();
+	$plugskel_db    = Plugin_DB::get_instance();
+	$plugskel_admin = Admin\Plugin_Admin::get_instance();
 }
 
 register_activation_hook( __FILE__, array( 'SCayton\\PluginSkeleton\\Plugin_Config', 'activate' ) );
