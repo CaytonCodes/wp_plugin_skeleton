@@ -11,7 +11,6 @@
 namespace SCayton\PluginSkeleton\Admin;
 
 use SCayton\PluginSkeleton\Plugin_Config;
-use SCayton\PluginSkeleton\Plugin_Skeleton;
 
 /**
  * Plugin Settings class.
@@ -60,106 +59,142 @@ class Plugin_Settings {
 	 * Initialize the settings.
 	 */
 	public function build_settings() {
-		$title = Plugin_Config::get_constant( 'PLUGIN_TITLE' ); // Plain English.
-		$name  = Plugin_Config::get_constant( 'PLUGIN_NAME' ); // Snake case.
-		$slug  = $this->snake_to_dash( $name );
+		$name = Plugin_Config::get_constant( 'PLUGIN_NAME' );
 
 		$this->settings = array(
 			'option_group' => $name,
-			'options_name' => $name,
+			'option_name'  => $name,
 			'sections'     => array(
 				array(
-					'id'     => 'general',
+					'id'     => $name,
 					'title'  => 'General',
-					'page'   => $slug,
+					'page'   => $name,
 					'fields' => array(
+						// Add fields here.
+						// Id is slug, title is plain English.
 						array(
-							'id'      => 'text_field',
-							'title'   => 'Text Field',
-							'type'    => 'text',
-							'desc'    => 'This is a text field.',
-							'default' => '',
-							'class'   => '',
+							'id'    => 'text_field',
+							'title' => 'Text Field',
+							'args'  => array(
+								'id'          => 'text_field',
+								'type'        => 'text',
+								'label_for'   => 'text_field',
+								'class'       => 'regular-text',
+								'default'     => '',
+								'description' => 'This is a text field.',
+								'size'        => '60',
+							),
 						),
 						array(
-							'id'      => 'text_area',
-							'title'   => 'Text Area',
-							'type'    => 'textarea',
-							'desc'    => 'This is a text area.',
-							'default' => '',
-							'class'   => '',
+							'id'    => 'text_area',
+							'title' => 'Text Area',
+							'args'  => array(
+								'id'          => 'text_area',
+								'type'        => 'textarea',
+								'label_for'   => 'text_area',
+								'class'       => 'large-text',
+								'default'     => '',
+								'description' => 'This is a text area.',
+							),
 						),
 						array(
-							'id'      => 'checkbox',
-							'type'    => 'Checkbox',
-							'title'   => 'Checkbox',
-							'desc'    => 'This is a checkbox.',
-							'default' => '',
-							'class'   => '',
+							'id'    => 'checkbox',
+							'title' => 'Checkbox',
+							'args'  => array(
+								'id'          => 'checkbox',
+								'type'        => 'checkbox',
+								'label_for'   => 'checkbox',
+								'class'       => '',
+								'default'     => '',
+								'description' => 'This is a checkbox.',
+							),
 						),
 						array(
-							'id'      => 'radio',
-							'type'    => 'Radio',
-							'title'   => 'Radio',
-							'desc'    => 'This is a radio.',
-							'default' => '',
-							'class'   => '',
+							'id'    => 'radio',
+							'title' => 'Radio',
+							'args'  => array(
+								'id'          => 'radio',
+								'type'        => 'radio',
+								'label_for'   => 'radio',
+								'class'       => '',
+								'default'     => '',
+								'description' => 'This is a radio.',
+								'options'     => array(
+									'option_1' => 'Option 1',
+									'option_2' => 'Option 2',
+									'option_3' => 'Option 3',
+								),
+							),
 						),
 						array(
-							'id'      => 'select',
-							'type'    => 'Select',
-							'title'   => 'Select',
-							'desc'    => 'This is a select.',
-							'default' => '',
-							'class'   => '',
+							'id'    => 'select',
+							'title' => 'Select',
+							'args'  => array(
+								'id'          => 'select',
+								'type'        => 'select',
+								'label_for'   => 'select',
+								'class'       => '',
+								'default'     => '',
+								'description' => 'This is a select.',
+								'options'     => array(
+									'option_1' => 'Option 1',
+									'option_2' => 'Option 2',
+									'option_3' => 'Option 3',
+								),
+							),
 						),
 						array(
-							'id'      => 'multiselect',
-							'type'    => 'Multiselect',
-							'title'   => 'Multiselect',
-							'desc'    => 'This is a multiselect.',
-							'default' => '',
-							'class'   => '',
+							'id'    => 'multiselect',
+							'title' => 'Multiselect',
+							'args'  => array(
+								'id'          => 'multiselect',
+								'type'        => 'multiselect',
+								'label_for'   => 'multiselect',
+								'class'       => '',
+								'default'     => '',
+								'description' => 'This is a multiselect.',
+								'options'     => array(
+									'option_1' => 'Option 1',
+									'option_2' => 'Option 2',
+									'option_3' => 'Option 3',
+								),
+							),
 						),
 						array(
-							'id'      => 'color',
-							'type'    => 'Color',
-							'title'   => 'Color',
-							'desc'    => 'This is a color.',
-							'default' => '',
-							'class'   => '',
+							'id'    => 'color',
+							'title' => 'Color',
+							'args'  => array(
+								'id'          => 'color',
+								'type'        => 'color',
+								'label_for'   => 'color',
+								'class'       => '',
+								'default'     => '',
+								'description' => 'This is a color.',
+							),
 						),
 						array(
-							'id'      => 'date',
-							'type'    => 'Date',
-							'title'   => 'Date',
-							'desc'    => 'This is a date.',
-							'default' => '',
-							'class'   => '',
+							'id'    => 'file',
+							'title' => 'File',
+							'args'  => array(
+								'id'          => 'file',
+								'type'        => 'file',
+								'label_for'   => 'file',
+								'class'       => '',
+								'default'     => '',
+								'description' => 'This is a file.',
+							),
 						),
 						array(
-							'id'      => 'time',
-							'type'    => 'Time',
-							'title'   => 'Time',
-							'desc'    => 'This is a time.',
-							'default' => '',
-							'class'   => '',
-						),
-						array(
-							'id'      => 'datetime',
-							'type'    => 'Datetime',
-							'title'   => 'Datetime',
-							'desc'    => 'This is a datetime.',
-							'default' => '',
-							'class'   => '',
-						),
-						array(
-							'id'      => 'file',
-							'type'    => 'File',
-							'title'   => 'File',
-							'desc'    => 'This is a file.',
-							'default' => '',
-							'class'   => '',
+							'id'    => 'image',
+							'title' => 'Image',
+							'args'  => array(
+								'id'          => 'image',
+								'type'        => 'image',
+								'label_for'   => 'image',
+								'class'       => '',
+								'default'     => '',
+								'description' => 'This is an image.',
+							),
 						),
 					),
 				),
@@ -171,7 +206,8 @@ class Plugin_Settings {
 	 * Initialize the settings.
 	 */
 	public function register_settings() {
-		$success[1] = register_setting( $this->settings['option_group'], $this->settings['options_name'], array( $this, 'sanitize_settings' ) );
+
+		register_setting( $this->settings['option_group'], $this->settings['option_name'], array( $this, 'sanitize' ) );
 
 		foreach ( $this->settings['sections'] as $section ) {
 			add_settings_section( $section['id'], $section['title'], array( $this, 'section_header' ), $section['page'] );
@@ -183,10 +219,7 @@ class Plugin_Settings {
 					array( $this, 'field_callback' ),
 					$section['page'],
 					$section['id'],
-					array(
-						'label_for' => $field['desc'],
-						'class'     => $field['class'],
-					)
+					$field['args'],
 				);
 			}
 		}
@@ -205,60 +238,68 @@ class Plugin_Settings {
 	}
 
 	/**
-	 * Field callback.
-	 */
-	public function field_callback( $args ) {
-		Plugin_Skeleton::log( 'field_callback', $args );
-
-		$option = get_option( $this->settings['options_name'] );
-
-		$value = isset( $option[ $args['label_for'] ] ) ? $option[ $args['label_for'] ] : '';
-
-		switch ( $args['class'] ) {
-			case 'text':
-				printf( '<input type="text" id="%s" name="%s[%s]" value="%s" />', $args['label_for'], $this->settings['options_name'], $args['label_for'], $value );
-				break;
-			case 'textarea':
-				printf( '<textarea id="%s" name="%s[%s]">%s</textarea>', $args['label_for'], $this->settings['options_name'], $args['label_for'], $value );
-				break;
-			case 'checkbox':
-				printf( '<input type="checkbox" id="%s" name="%s[%s]" value="1" %s />', $args['label_for'], $this->settings['options_name'], $args['label_for'], checked( 1, $value, false ) );
-				break;
-			case 'radio':
-				foreach ( $args['label_for'] as $key => $label ) {
-					printf( '<input type="radio" id="%s" name="%s[%s]" value="%s" %s /> %s', $args['label_for'], $this->settings['options_name'], $args['label_for'], $key, checked( $key, $value, false ), $label );
-				}
-				break;
-		}
-	}
-
-	/**
 	 * Section Header.
-	 *
-	 * @return string $html HTML for section header.
 	 */
 	public function section_header() {
-		$html = '<p>Section header</p>';
-
-		return $html;
+		print 'Enter settings below.';
 	}
 
 	/**
-	 * Sanitize each setting field as needed.
+	 * Sanitize setting field
 	 *
 	 * @param array $input Contains all settings fields as array keys.
-	 *
-	 * @return array $output Contains all sanitized settings.
 	 */
-	public function sanitize_settings( $input ) {
+	public function sanitize( $input ) {
 		$output = array();
-
 		foreach ( $input as $key => $value ) {
-			if ( isset( $input[ $key ] ) ) {
-				$output[ $key ] = sanitize_text_field( $value );
-			}
+			$output[ $key ] = sanitize_text_field( $value );
 		}
 
 		return $output;
+	}
+
+	/**
+	 * Get the settings option array and print one of its values.
+	 *
+	 * @param array $args Arguments for field to be printed.
+	 */
+	public function field_callback( $args ) {
+		$name          = Plugin_Config::get_constant( 'PLUGIN_NAME' );
+		$current_value = isset( get_option( $name )[ $args['id'] ] ) ?
+			get_option( $name )[ $args['id'] ] :
+			$args['default'];
+		$field_name    = $name . '[' . $args['id'] . ']';
+		$size          = isset( $args['size'] ) ? $args['size'] : '20';
+
+		if ( ( 'select' === $args['type'] ) || ( 'multiselect' === $args['type'] ) ) {
+			if ( ! isset( $args['size'] ) ) {
+				$options_length = count( $args['options'] );
+				$size           = ( $options_length > 7 ) ? 7 : $options_length;
+			}
+			$html = '';
+			$html = '<select id="' . esc_attr( $args['id'] )
+			. '" name="' . esc_attr( $field_name )
+			. '" size="' . esc_attr( $size )
+			. '" value="' . esc_attr( $current_value ) . '" />';
+			foreach ( $args['options'] as $key => $label ) {
+				$html .= '<option value="' . esc_attr( $key ) . '">' . esc_html( $label ) . '</option>';
+			}
+			$html .= '</select>';
+			$html .= '<p class="' . esc_attr( $field_name . ' description' )
+			. '">' . esc_html( $args['description'] ) . '</p>';
+
+			echo $html;
+		} else {
+			$html  = '';
+			$html  = '<input id="' . esc_attr( $args['id'] )
+				. '" name="' . esc_attr( $field_name )
+				. '" type="' . esc_attr( $args['type'] )
+				. '" size="' . esc_attr( $size )
+				. '" value="' . esc_attr( $current_value ) . '" />';
+			$html .= '<p class="' . esc_attr( $field_name . ' description' )
+				. '">' . esc_html( $args['description'] ) . '</p>';
+
+			echo $html;
+		}
 	}
 }

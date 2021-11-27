@@ -1,0 +1,7 @@
+{
+    "extends": ["plugin:@wordpress/eslint-plugin/recommended", "airbnb", "prettier"],
+    "plugins": ["prettier"],
+    "rules": {
+        "prettier/prettier": ["error"]
+    }
+}

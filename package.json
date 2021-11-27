@@ -1,0 +1,40 @@
+{
+  "name": "plugin_skeleton",
+  "version": "1.0.0",
+  "description": "Plugin Description",
+  "main": "index.js",
+  "dependencies": {
+    "typescript": "^3.9.10"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-react": "^7.16.0",
+    "@wordpress/eslint-plugin": "^9.2.0",
+    "@wordpress/scripts": "19.2.2",
+    "acorn": "^8.6.0",
+    "babel-loader": "^8.2.3",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.26.1",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "prettier": "^2.4.1",
+    "styled-components": "^5.3.3",
+    "webpack": "^5.64.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "wp-scripts start assets/js/app/src/index.js --output-path=assets/js/app/build",
+    "startAdmin": "wp-scripts start assets/js/admin-app/src/index.js --output-path=assets/js/admin-app/build",
+    "build": "webpack --watch",
+    "buildAdmin": "wp-scripts build assets/js/admin-app/src/index.js --output-path=assets/js/admin-app/build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CaytonCodes/wp_plugin_skeleton.git"
+  },
+  "author": "Scotty Cayton",
+  "license": "ISC"
+}

@@ -9,6 +9,7 @@ Icon
 # Thumbnails
 ._*
 
+
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
 .fseventsd
@@ -28,6 +29,13 @@ Temporary Items
 
 # Lando localdev
 .lando.yml
+
+# ignore node dependency directories
+node_modules/
+package-lock.json
+
+# bundles
+**/build/
 
 # Vim generated files #
 ######################

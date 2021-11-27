@@ -51,7 +51,7 @@ class Plugin_Skeleton {
 			'key' => 'value',
 		);
 
-		// enqueue script.
+		// single-page function.
 		wp_enqueue_script( 'plugin-skeleton', plugins_url( '../assets/js/plugin-skeleton.js', __FILE__ ), null, '1.0.0', true );
 		// send variables to script.
 		wp_localize_script(
@@ -59,6 +59,9 @@ class Plugin_Skeleton {
 			'args',
 			$args
 		);
+
+		// built script.
+		wp_enqueue_script( 'plugin-app', plugins_url( '../assets/js/app/build/index.js', __FILE__ ), array( 'wp-blocks' ), '1.0.0', true );
 	}
 
 	/**

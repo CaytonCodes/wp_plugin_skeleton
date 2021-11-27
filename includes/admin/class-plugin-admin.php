@@ -72,7 +72,6 @@ class Plugin_Admin {
 		$this->title    = Plugin_Config::get_constant( 'PLUGIN_TITLE' );
 		$this->name     = Plugin_Config::get_constant( 'PLUGIN_NAME' );
 		$this->settings = Plugin_Settings::get_instance();
-
 	}
 
 	/**
@@ -90,7 +89,24 @@ class Plugin_Admin {
 	 * @return void
 	 */
 	public function register_admin_scripts() {
-		wp_register_script( $this->settings::snake_to_dash( $this->name ) . '-admin-script', plugins_url( '../../assets/js/admin.js', __FILE__ ), array( 'jquery' ), '0.0.1', true );
+		// array of variables to send as arguments.
+		$admin_args = array(
+			'key' => 'value',
+		);
+
+		wp_register_script( $this->settings::snake_to_dash( $this->name ) . '-admin-script', plugins_url( '../../assets/js/admin.js', __FILE__ ), null, '0.0.1', true );
+
+		// send variables to script.
+		wp_localize_script(
+			$this->settings::snake_to_dash( $this->name ) . '-admin-script',
+			'admin_args',
+			$admin_args
+		);
+
+		// built script.
+		wp_enqueue_script( 'admin-js-app', plugins_url( '../../assets/js/admin-app/build/index.js', __FILE__ ), array( 'wp-blocks' ), '1.0.0', true );
+
+		// Styles.
 		wp_register_style( $this->settings::snake_to_dash( $this->name ) . '-admin-style', plugins_url( '../../assets/css/admin.css', __FILE__ ), '0.0.1', true );
 	}
 
@@ -119,7 +135,7 @@ class Plugin_Admin {
 	public function display_admin_page() {
 		$name  = $this->name;
 		$title = $this->title;
-		$slug = $this->settings->snake_to_dash( $name );
+		$slug  = $this->settings->snake_to_dash( $name );
 
 		wp_enqueue_script( $this->settings::snake_to_dash( $name ) . '-admin-script' );
 		wp_enqueue_style( $this->settings::snake_to_dash( $name ) . '-admin-style' );
@@ -127,22 +143,24 @@ class Plugin_Admin {
 		ob_start();
 		?>
 			<div class='$name .  container' id='$name'>
-				<H1>$title Plugin Settings</H1>
+				<H1>
+					<?php echo esc_attr( $title ); ?>
+					Plugin Settings</H1>
 				<div class='settings-section'>
 					<h2>General Settings</h2>
 					<form method='post' action='options.php'>
 						<table class='form-table'>
 							<?php
-							settings_fields( $name );
-							do_settings_sections( $slug );
+							settings_fields( $name ); // reference the $option_group.
+							do_settings_sections( $name ); // reference the settings' $page.
 							submit_button( 'Save Settings' );
 							?>
 						</table>
 					</form>
 				</div>
 			</div>
-			<?php
-			echo ob_get_clean();
+		<?php
+		echo ob_get_clean();
 	}
 
 	/**
